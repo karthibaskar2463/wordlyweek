@@ -103,13 +103,9 @@ public class WriterJpaService implements WriterRepository {
     @Override
     public void deleteWriter(int writerId) {
         try {
-            Writer writer = writerJpaRepository.findById(writerId).get();
-            List<Magazine> magazines = writer.getMagazines();
-            for (Magazine magazine : magazines) {
-                magazine.getWriters().remove(writer);
-            }
-            magazineJpaRepository.saveAll(magazines);
+
             writerJpaRepository.deleteById(writerId);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
